@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Latvijas pastkartes</title>
+<style>
+:root{--bg:#efe6d2;--paper:#fffaf0;--ink:#2b2218;--muted:#6b5d4c;--red:#b3361f;--line:#cdbfa3;--fs:18px;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10182a;--paper:#1c2540;--ink:#f1ead9;--muted:#b4b9c9;--red:#ff8a6b;--line:#3a4668}}
+:root[data-theme="dark"]{--bg:#10182a;--paper:#1c2540;--ink:#f1ead9;--muted:#b4b9c9;--red:#ff8a6b;--line:#3a4668}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:var(--fs)/1.5 Georgia,"Times New Roman",serif;background:var(--bg);
+background-image:radial-gradient(circle at 20% 0,rgba(255,255,255,.25),transparent 50%),repeating-linear-gradient(45deg,transparent 0 14px,rgba(120,90,40,.04) 14px 15px)}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+header{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-start}
+h1{font-size:2em;margin:0;line-height:1.1;letter-spacing:.02em}
+h1 span{display:block;font-size:.5em;font-style:italic;color:var(--red);font-weight:400}
+.tools{display:flex;gap:6px}
+button{font:inherit;cursor:pointer;color:inherit}
+.tool{background:var(--paper);border:2px solid var(--line);border-radius:8px;padding:6px 12px;min-height:40px}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:18px 0 6px}
+.bar div{flex:1 1 220px}
+label{font-weight:700;display:block;margin-bottom:4px}
+input{width:100%;font:inherit;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.btn{background:var(--red);color:#fff;border:0;border-radius:10px;padding:12px 18px;min-height:46px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.prog{color:var(--muted);font-style:italic;margin:6px 0 14px}
+.grid{list-style:none;margin:0;padding:6px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
+.tile{width:100%;background:var(--paper);border:0;padding:8px 8px 10px;text-align:left;border-radius:4px;box-shadow:0 3px 10px rgba(60,40,10,.25);position:relative;transition:transform .2s}
+li:nth-child(odd) .tile{transform:rotate(-1.6deg)}li:nth-child(even) .tile{transform:rotate(1.4deg)}
+.tile:hover,.tile:focus-visible{transform:rotate(0) translateY(-5px) scale(1.03)}
+.pic{height:96px;border-radius:2px;background:var(--g);display:grid;place-items:center;font-size:2.6em;position:relative;overflow:hidden}
+.pic::before{content:"";position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.35);top:8px;right:10px}
+.pic span{position:relative}
+.tile b{display:block;margin-top:6px}
+.tile small{color:var(--muted)}
+.seen{position:absolute;top:2px;right:2px;font-size:.7em;color:var(--red);border:2px solid var(--red);border-radius:6px;padding:0 5px;transform:rotate(10deg);background:var(--paper);font-weight:700}
+.empty{color:var(--muted);padding:12px}
+dialog{border:0;padding:0;background:transparent;max-width:min(720px,94vw);width:100%;color:var(--ink)}
+dialog::backdrop{background:rgba(20,12,4,.65)}
+.pc{background:var(--paper);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5);padding:12px;transition:transform .18s}
+.pc.turn{transform:rotateY(90deg)}
+.front{background:var(--g);border-radius:3px;min-height:300px;display:grid;place-items:center;text-align:center;padding:24px;color:#fff;position:relative;overflow:hidden}
+.front::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.3);top:18px;right:26px}
+.front::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-40px;height:90px;background:rgba(0,0,0,.25);border-radius:50% 50% 0 0}
+.front *{position:relative;z-index:1}
+.big{font-size:4.5em;line-height:1}
+.front h2{font-size:2.2em;margin:4px 0;text-shadow:0 2px 6px rgba(0,0,0,.4)}
+.front p{margin:0;letter-spacing:.2em;text-transform:uppercase;font-size:.8em}
+.back{display:grid;grid-template-columns:1fr;gap:14px;padding:8px;font-family:"Bradley Hand","Segoe Print","Comic Sans MS",cursive}
+@media(min-width:620px){.back{grid-template-columns:1.6fr 1fr}}
+.back h3{margin:0 0 4px;color:var(--red);font-size:1.15em}
+.back p,.back li{line-height:1.7}
+.back ul{margin:0 0 8px;padding-left:1.1em}
+.tags{display:flex;flex-wrap:wrap;gap:6px;padding:0;list-style:none}
+.tags li{background:var(--bg);border:2px dashed var(--line);border-radius:8px;padding:0 10px;line-height:1.6}
+.side{border-left:2px solid var(--line);padding-left:14px;position:relative;min-height:170px}
+@media(max-width:619px){.side{border-left:0;border-top:2px solid var(--line);padding:14px 0 0}}
+.stamp{width:72px;height:84px;margin-left:auto;background:var(--g);display:grid;place-items:center;font-size:2em;outline:3px dotted var(--paper);outline-offset:-5px;border:2px solid var(--line)}
+.mark{position:absolute;top:30px;right:40px;width:78px;height:78px;border:3px double var(--red);border-radius:50%;display:grid;place-items:center;text-align:center;font-size:.6em;color:var(--red);transform:rotate(-14deg);opacity:.75;line-height:1.2;font-weight:700}
+.addr{margin-top:100px}
+.addr i{display:block;border-bottom:2px solid var(--line);margin-top:10px;min-height:1.6em;font-style:normal}
+.dact{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+footer{color:var(--muted);font-size:.8em;margin:22px 0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1><span>Sveiciens no</span>Latvijas pastkartēm</h1>
+  <div class="tools" role="group" aria-label="Pieejamības iestatījumi">
+    <button class="tool" id="smaller" aria-label="Samazināt burtu izmēru">A−</button>
+    <button class="tool" id="bigger" aria-label="Palielināt burtu izmēru">A+</button>
+    <button class="tool" id="theme" aria-label="Mainīt gaišo vai tumšo tēmu">Diena / nakts</button>
+  </div>
+</header>
+<div class="bar">
+  <div><label for="q">Meklē vietu</label><input id="q" type="search" placeholder="Piemēram: Kuldīga" autocomplete="off"></div>
+  <button class="btn" id="rnd">Pārsteidz mani!</button>
+</div>
+<p class="prog" id="prog"></p>
+<ul class="grid" id="grid"></ul>
+<footer>Skolas hakatona projekts. Pieskaries pastkartei, lai to atvērtu, un apgriez, lai izlasītu stāstu.</footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dt">
+  <div class="pc" id="pc"></div>
+  <div class="dact">
+    <button class="btn" id="flip">Apgriezt pastkarti ↻</button>
+    <button class="btn ghost" id="close">Aizvērt ✕</button>
+  </div>
+</dialog>
+
+<script>
+const PLACES=[
+{n:"Rīga",r:"Rīga",e:"🏙️",h:[20,350],l:"Rīga dibināta 1201. gadā. Vecrīga ir tās vēsturiskais centrs ar šaurām ieliņām un baznīcām.",f:["Rīgas vēsturiskais centrs UNESCO sarakstā ir kopš 1997. gada.","Rīgā ir viena no lielākajām jūgendstila ēku kolekcijām pasaulē.","Melngalvju nams atrodas Rātslaukumā."],a:["Vecrīgas pastaiga","Jūgendstila ēkas Alberta ielā","Centrāltirgus","Melngalvju nams"]},
+{n:"Sigulda",r:"Vidzeme",e:"🚡",h:[140,190],l:"Par Turaidas Rozi stāsta, ka 1620. gadā jaunā Māija izvēlējās nāvi, nevis nodevību savam mīļotajam. Viņas kapa vietu Turaidā apmeklē vēl šodien.",f:["Turaidas pili sāka celt 1214. gadā.","Sigulda atrodas Gaujas nacionālajā parkā.","Gūtmaņa ala ir viena no lielākajām alām Baltijā."],a:["Turaidas muzejrezervāts","Gūtmaņa ala","Kabeļvagoniņš pāri Gaujai","Bobsleja trase"]},
+{n:"Cēsis",r:"Vidzeme",e:"🏰",h:[270,320],l:"Cēsu pils bija Livonijas ordeņa mestra rezidence. Apmeklētāji pa tumšajiem torņiem iet ar laternām.",f:["Viduslaiku pils celta 13. gadsimtā.","Blakus tai ir 18. gadsimta Jaunā pils.","Cēsu vecpilsēta ir ērta pastaigām."],a:["Viduslaiku pils ar laternām","Pastaiga pa vecpilsētu","Pils parks ar dīķi"]},
+{n:"Alūksne",r:"Vidzeme",e:"🚂",h:[200,230],l:"Alūksnes ezera salā stāv viduslaiku pils drupas, kurām var tikt pāri pa tiltu.",f:["Pilssalā atrodas Marienburgas pilsdrupas.","Alūksnes bānītis ir šaursliežu dzelzceļš, kas joprojām kursē.","Alūksnes ezers ir pašā pilsētas centrā."],a:["Alūksnes bānīša brauciens","Pilssalas pilsdrupas","Pastaiga gar ezeru"]},
+{n:"Kuldīga",r:"Kurzeme",e:"🌊",h:[190,220],l:"Pār Ventu stiepjas ūdenskritums Ventas rumba, kur pavasarī var redzēt zivis lecam augšup pa straumi.",f:["Ventas rumba ir ap 249 m plata, un to uzskata par platāko ūdenskritumu Eiropā.","Ķieģeļu tilts pār Ventu celts 1874. gadā.","Kuldīgas vecpilsēta kopš 2023. gada ir UNESCO mantojumā."],a:["Ventas rumba","Ķieģeļu tilts","Vecpilsētas pastaiga","Kuldīgas novada muzejs"]},
+{n:"Liepāja",r:"Kurzeme",e:"🎶",h:[30,10],l:"Liepāju mīļi sauc par pilsētu, kur piedzimst vējš. Karostā var apskatīt bijušo militāro pilsētiņu.",f:["Karostas cietumā tagad notiek ekskursijas.","Koncertzāle “Lielais dzintars” atvērta 2015. gadā.","Liepājas pludmale ir plata un smilšaina."],a:["Karostas cietums","Koncertzāle “Lielais dzintars”","Pludmale","Karostas Ziemeļu forti"]},
+{n:"Ventspils",r:"Kurzeme",e:"🐄",h:[100,170],l:"Ventspili iepazīst pēc krāsainajām govju skulptūrām, kas ir pilsētas mākslas projekta daļa.",f:["Ventspils pils celta 13. gadsimtā.","Pilsētas pludmale ir saņēmusi Zilo karogu.","Ventspilī ir liela osta."],a:["Ventspils pils","Pludmale","Jūras brīvdabas muzejs","Pastaiga pa Ostas ielu"]},
+{n:"Kolka",r:"Kurzeme",e:"🧭",h:[210,260],l:"Kolkasragā satiekas Baltijas jūra un Rīgas līcis, un viļņi atsitas viens pret otru.",f:["Kolkasrags ir Kurzemes ziemeļu gals.","Netālu atrodas Slīteres nacionālais parks.","Vietā ir bāka un plats liedags."],a:["Kolkasraga skatu vieta","Slīteres nacionālais parks","Pastaiga pa liedagu"]},
+{n:"Jūrmala",r:"Pierīga",e:"🏖️",h:[45,15],l:"Jūrmala senāk bija kūrortpilsēta, kurp brauca ārstēties un atpūsties. Par to liecina krāšņās koka villas.",f:["Pludmale stiepjas aptuveni 33 km.","Pilsētā ir daudz 19. un 20. gadsimta koka ēku.","Dzintaru koncertzālē notiek vasaras koncerti."],a:["Pastaiga pa pludmali","Dzintaru mežaparks","Jomas ielas pastaiga"]},
+{n:"Ķemeri",r:"Pierīga",e:"🌿",h:[110,150],l:"Ķemeri bija slaveni ar ārstnieciskajām dūņām un sēra avotiem.",f:["Ķemeru nacionālajā parkā ir Lielais Ķemeru tīrelis.","Tīrelī ir laipu taka, pa kuru drošs gājiens.","Sēra avoti izdala raksturīgu smaku."],a:["Lielā tīreļa laipu taka","Ķemeru parks","Sēra avots"]},
+{n:"Rundāle",r:"Zemgale",e:"👑",h:[48,28],l:"Rundāles pili 18. gadsimtā cēla hercogs Ernsts Johans Bīrons kā savu vasaras rezidenci.",f:["Pils arhitekts ir Bartolomeo Rastrelli.","Celtniecība sākās 1736. gadā.","Pie pils ir franču dārzs un rožu dārzs."],a:["Pils ekskursija","Franču dārzs","Rožu dārzs"]},
+{n:"Bauska",r:"Zemgale",e:"🏯",h:[15,345],l:"Pie Bauskas pils saplūst upes Mūsa un Mēmele, veidojot Lielupi.",f:["Bauskas pils celta 15. gadsimtā.","Pils sastāv no ordeņa pils un hercogu pils.","Pilsdrupu tornī var uzkāpt."],a:["Bauskas pils","Upju sateces vieta","Vecpilsētas pastaiga"]},
+{n:"Daugavpils",r:"Latgale",e:"🎨",h:[330,280],l:"Daugavpils cietoksnis ir unikāls 19. gadsimta militārais komplekss, kas tagad kļuvis par kultūras vietu.",f:["Cietoksnis celts pēc 1810. gada.","Marka Rotko mākslas centrs atrodas cietoksnī.","Mārks Rotko dzimis Daugavpilī 1903. gadā."],a:["Marka Rotko mākslas centrs","Cietokšņa pastaiga","Pilsētas centrs"]},
+{n:"Rēzekne",r:"Latgale",e:"🏺",h:[25,5],l:"Rēzekni sauc par Latgales sirdi. Pilsētā var iepazīt latgaliešu kultūru.",f:["Latgales vēstniecība GORS atvērta 2013. gadā.","Rēzeknes pilsdrupas atrodas pilskalnā.","Latgale slavena ar keramiku."],a:["Latgales vēstniecība GORS","Rēzeknes pilsdrupas","Keramikas darbnīcas apkārtnē"]},
+{n:"Aglona",r:"Latgale",e:"⛪",h:[225,255],l:"Aglonas bazilika ir viena no nozīmīgākajām katoļu svētvietām Latvijā.",f:["Pašreizējā bazilika celta 18. gadsimta beigās.","Katru gadu 15. augustā šeit pulcējas svētceļnieki.","Aglona atrodas starp diviem ezeriem."],a:["Aglonas bazilika","Pastaiga gar ezeru","Svētceļnieku ceļš"]}
+];
+const $=id=>document.getElementById(id);
+const grad=p=>`linear-gradient(135deg,hsl(${p.h[0]} 75% 58%),hsl(${p.h[1]} 70% 38%))`;
+let seen=new Set(),cur=null,onBack=false;
+try{seen=new Set(JSON.parse(localStorage.getItem("seen")||"[]"))}catch(e){}
+
+// === PAŠU RAKSTĪTAIS KODS (komandai: uzrakstiet šo funkciju paši, bez MI) ===
+// Atgriež vietas, kuru nosaukumā ir ievadītais teksts (bez garumzīmēm un lielajiem burtiem).
+function atrastVietas(teksts){
+  const norm=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const t=norm(teksts.trim());
+  return PLACES.filter(p=>norm(p.n).includes(t));
+}
+// === PAŠU KODA BEIGAS ===
+
+function renderGrid(){
+  const found=atrastVietas($("q").value),g=$("grid");
+  g.innerHTML="";
+  $("prog").textContent="Atvērtas pastkartes: "+seen.size+" no "+PLACES.length;
+  if(!found.length){g.innerHTML='<li class="empty">Šādas pastkartes nav. Pamēģini citu nosaukumu.</li>';return}
+  found.forEach(p=>{
+    const li=document.createElement("li"),b=document.createElement("button");
+    b.className="tile";b.style.setProperty("--g",grad(p));
+    b.innerHTML='<div class="pic"><span>'+p.e+'</span></div><b>'+p.n+'</b><small>'+p.r+'</small>'+(seen.has(p.n)?'<span class="seen">Apmeklēts</span>':'');
+    b.onclick=()=>openCard(p);
+    li.appendChild(b);g.appendChild(li);
+  });
+}
+function face(){
+  const p=cur,pc=$("pc");pc.style.setProperty("--g",grad(p));
+  if(!onBack){
+    pc.innerHTML='<div class="front"><div><div class="big">'+p.e+'</div><h2 id="dt">'+p.n+'</h2><p>Latvija · '+p.r+'</p></div></div>';
+    $("flip").textContent="Apgriezt pastkarti ↻";
+  }else{
+    const li=x=>"<li>"+x+"</li>";
+    pc.innerHTML='<div class="back"><div><h3 id="dt">Sveiks no vietas '+p.n+'!</h3><p>'+p.l+'</p><h3>Zināji?</h3><ul>'+p.f.map(li).join("")+'</ul><h3>Ko darīt</h3><ul class="tags">'+p.a.map(li).join("")+'</ul></div>'+
+    '<div class="side"><div class="stamp">'+p.e+'</div><div class="mark">LATVIJA<br>PASTS<br>2026</div><div class="addr"><i>Kam: Tev, ceļotāj</i><i>'+p.r+', Latvija</i></div></div></div>';
+    $("flip").textContent="Apgriezt atpakaļ ↻";
+  }
+}
+function turn(){
+  const pc=$("pc");onBack=!onBack;
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches){face();return}
+  pc.classList.add("turn");
+  setTimeout(()=>{face();pc.classList.remove("turn")},180);
+}
+function openCard(p){
+  cur=p;onBack=false;face();
+  seen.add(p.n);try{localStorage.setItem("seen",JSON.stringify([...seen]))}catch(e){}
+  renderGrid();$("dlg").showModal();
+}
+$("flip").onclick=turn;
+$("close").onclick=()=>$("dlg").close();
+$("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close()});
+$("q").addEventListener("input",renderGrid);
+$("rnd").onclick=()=>openCard(PLACES[Math.floor(Math.random()*PLACES.length)]);
+
+// Pieejamība: burtu izmērs un tēma
+let fs=18;
+try{fs=parseInt(localStorage.getItem("fs"))||18;const th=localStorage.getItem("th");if(th)document.documentElement.dataset.theme=th}catch(e){}
+function setFs(v){fs=Math.min(26,Math.max(14,v));document.documentElement.style.setProperty("--fs",fs+"px");try{localStorage.setItem("fs",fs)}catch(e){}}
+setFs(fs);
+$("bigger").onclick=()=>setFs(fs+2);
+$("smaller").onclick=()=>setFs(fs-2);
+$("theme").onclick=()=>{
+  const c=document.documentElement.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  const n=c==="dark"?"light":"dark";document.documentElement.dataset.theme=n;
+  try{localStorage.setItem("th",n)}catch(e){}
+};
+renderGrid();
+</script>
+</body>
+</html>
